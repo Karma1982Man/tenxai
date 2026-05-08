@@ -584,11 +584,12 @@ body.cursor-active #cursor{opacity:1;}
 /* ════════════════════════════════════════════════════════════ */
 .cases-grid{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:1px;
-  background:var(--line);
+  grid-template-columns:repeat(4,1fr);
+  gap:0;
+  background:transparent;
+  align-items:start;
 }
-@media(max-width:1000px){.cases-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:1200px){.cases-grid{grid-template-columns:1fr 1fr;}}
 @media(max-width:600px){.cases-grid{grid-template-columns:1fr;}}
 
 .case-card{
@@ -598,9 +599,42 @@ body.cursor-active #cursor{opacity:1;}
   display:flex;
   flex-direction:column;
   gap:0;
-  transition:background .2s;
+  border:1px solid var(--line);
+  margin:-0.5px;
+  transition:background .25s, box-shadow .25s, transform .25s;
 }
-.case-card:hover{background:var(--paper);}
+.case-card:nth-child(1){
+  margin-top:64px;
+  box-shadow:0 4px 20px oklch(0 0 0 / .05);
+}
+.case-card:nth-child(2){
+  margin-top:0;
+  box-shadow:0 12px 48px oklch(0 0 0 / .11);
+}
+.case-card:nth-child(3){
+  margin-top:96px;
+  box-shadow:0 2px 12px oklch(0 0 0 / .04);
+}
+.case-card:nth-child(4){
+  margin-top:32px;
+  box-shadow:0 8px 32px oklch(0 0 0 / .08);
+}
+@media(max-width:1200px){
+  .case-card:nth-child(1),
+  .case-card:nth-child(2),
+  .case-card:nth-child(3),
+  .case-card:nth-child(4){margin-top:0;box-shadow:none;}
+}
+.case-card:hover{
+  background:var(--paper);
+  transform:translateY(-4px);
+  box-shadow:0 16px 56px oklch(0 0 0 / .13);
+  z-index:2;
+}
+.case-card:nth-child(1):hover{ transform:translateY(-4px); }
+.case-card:nth-child(2):hover{ transform:translateY(-4px); }
+.case-card:nth-child(3):hover{ transform:translateY(-4px); }
+.case-card:nth-child(4):hover{ transform:translateY(-4px); }
 
 .case-card .tick{color:var(--ink-4);opacity:1;}
 .case-card:hover .tick{color:var(--ink-3);}
@@ -988,7 +1022,7 @@ footer{
         <div class="case-tag">
           <span class="dot" aria-hidden="true"></span>case · 042 · cf-grain
         </div>
-        <div class="case-metric">−95%</div>
+        <div class="case-metric" data-count="95" data-prefix="−" data-suffix="%" data-decimals="0">−95%</div>
         <p class="case-desc" data-pretext>Czas zamykania spraw asekuracyjnych dla 14 silosów zbożowych skrócony z 9 dni do 36 minut. Agent domenowy z 14 narzędziami, 2 reviewerami.</p>
         <div class="case-meta">
           <span>q2 · 2026</span>
@@ -1004,7 +1038,7 @@ footer{
         <div class="case-tag">
           <span class="dot" aria-hidden="true"></span>case · 038 · underwriting
         </div>
-        <div class="case-metric">10×</div>
+        <div class="case-metric" data-count="10" data-prefix="" data-suffix="×" data-decimals="0">10×</div>
         <p class="case-desc" data-pretext>Przyspieszenie procesu underwritingu w firmie ubezpieczeniowej. Automatyczna klasyfikacja ryzyka, walidacja dokumentów, generowanie rekomendacji.</p>
         <div class="case-meta">
           <span>q1 · 2026</span>
@@ -1020,11 +1054,27 @@ footer{
         <div class="case-tag">
           <span class="dot" aria-hidden="true"></span>case · 031 · legal-ops
         </div>
-        <div class="case-metric">1.84s</div>
+        <div class="case-metric" data-count="1.84" data-prefix="" data-suffix="s" data-decimals="2">1.84s</div>
         <p class="case-desc" data-pretext>Analiza umów prawnych w czasie zbliżonym do rzeczywistego. Wykrywanie klauzul ryzyka, weryfikacja zgodności z regulacjami, raport w 1.84s.</p>
         <div class="case-meta">
           <span>q4 · 2025</span>
           <span>cite · 7</span>
+        </div>
+      </article>
+
+      <article class="case-card reveal reveal-delay-3">
+        <span class="tick tl" aria-hidden="true"></span>
+        <span class="tick tr" aria-hidden="true"></span>
+        <span class="tick bl" aria-hidden="true"></span>
+        <span class="tick br" aria-hidden="true"></span>
+        <div class="case-tag">
+          <span class="dot" aria-hidden="true"></span>case · 027 · procurement
+        </div>
+        <div class="case-metric" data-count="78" data-prefix="−" data-suffix="%" data-decimals="0">−78%</div>
+        <p class="case-desc" data-pretext>Redukcja czasu przygotowania raportów audytowych. Automatyczna agregacja danych z 6 systemów ERP, walidacja zgodności, raport gotowy w 4 minuty.</p>
+        <div class="case-meta">
+          <span>q3 · 2025</span>
+          <span>conf · 0.94</span>
         </div>
       </article>
 
@@ -1282,6 +1332,38 @@ var x0=["BN","BN","BN","BN","BN","BN","BN","BN","BN","S","B","S","WS","B","BN","
   setTimeout(function() { typeNext(); }, 900);
 
   /* ── Pretext text layout ─────────────────────────────── */
+  /* ── Case metric counters ───────────────────────────── */
+  var caseCountersDone = false;
+
+  function startCaseCounters() {
+    if (caseCountersDone) return;
+    caseCountersDone = true;
+    document.querySelectorAll('.case-metric[data-count]').forEach(function(el, i) {
+      var target   = parseFloat(el.dataset.count);
+      var suffix   = el.dataset.suffix || '';
+      var prefix   = el.dataset.prefix || '';
+      var decimals = parseInt(el.dataset.decimals, 10);
+      var duration = 1200 + i * 150;
+      var start    = performance.now();
+      // start from 0, ease out
+      (function step(now) {
+        var t   = Math.min((now - start) / duration, 1);
+        var ease = 1 - Math.pow(1 - t, 3);
+        el.textContent = prefix + (target * ease).toFixed(decimals) + suffix;
+        if (t < 1) requestAnimationFrame(step);
+        else el.textContent = prefix + target.toFixed(decimals) + suffix;
+      })(start);
+    });
+  }
+
+  var casesSection = document.getElementById('cases');
+  if (casesSection) {
+    new IntersectionObserver(function(entries) {
+      if (entries[0].isIntersecting) startCaseCounters();
+    }, { threshold: 0.15 }).observe(casesSection);
+  }
+
+  /* ────────────────────────────────────────────────── */
   async function initPretext() {
     if (!window.Pretext) return;
     var { prepare, layout } = window.Pretext;
