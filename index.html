@@ -228,35 +228,64 @@ body.cursor-active #cursor{opacity:1;}
 
 .hero-wm{
   color:var(--paper);
-  font-size:clamp(72px, 13vw, 196px);
-  line-height:.95;
+  font-size:clamp(52px, 10vw, 148px);
+  line-height:.96;
   letter-spacing:-.04em;
   font-weight:500;
-  display:flex;
-  align-items:baseline;
   font-family:var(--t-sans);
-  margin-bottom:56px;
+  margin-bottom:36px;
 }
-.hero-wm .wm-dot{fill:var(--accent);}
-.hero-wm .wm-stem{fill:var(--paper);}
-@media(max-width:768px){.hero-wm{margin-bottom:40px;}}
-@media(max-width:480px){.hero-wm{margin-bottom:32px;}}
+@media(max-width:768px){.hero-wm{margin-bottom:28px;}}
+@media(max-width:480px){.hero-wm{margin-bottom:20px;}}
 
 .hero-sub{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:48px 64px;
-  max-width:960px;
+  display:flex;
+  flex-direction:column;
+  gap:32px;
+  max-width:680px;
   margin-bottom:80px;
 }
 .hero-sub p{
-  font-size:clamp(16px, 1.5vw, 22px);
-  line-height:1.45;
-  color:oklch(0.7 0.008 270);
+  font-size:clamp(16px, 1.4vw, 21px);
+  line-height:1.5;
+  color:oklch(0.62 0.008 270);
   font-weight:400;
 }
-@media(max-width:900px){.hero-sub{gap:24px;}}
-@media(max-width:680px){.hero-sub{grid-template-columns:1fr;gap:16px;margin-bottom:56px;}}
+.hero-actions{
+  display:flex;
+  gap:14px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+.btn-primary{
+  font-family:var(--t-mono);
+  font-size:11px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--dark);
+  background:var(--paper);
+  padding:14px 28px;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  transition:background .2s, color .2s;
+}
+.btn-primary:hover{background:var(--accent);color:var(--paper);}
+.btn-ghost{
+  font-family:var(--t-mono);
+  font-size:11px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:oklch(0.55 0.01 270);
+  border:1px solid var(--dark-line);
+  padding:14px 28px;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  transition:border-color .2s, color .2s;
+}
+.btn-ghost:hover{color:var(--paper);border-color:oklch(0.45 0.01 270);}
+@media(max-width:680px){.hero-sub{margin-bottom:56px;}}
 @media(max-width:480px){.hero-sub{margin-bottom:40px;}}
 
 .hero-bottom{
@@ -288,7 +317,8 @@ body.cursor-active #cursor{opacity:1;}
 .terminal-head .mono-x{width:14px;height:14px;opacity:.7;}
 .terminal-body{
   padding:20px;
-  min-height:120px;
+  height:216px;
+  overflow:hidden;
   color:oklch(0.88 0.005 80);
 }
 .terminal-body .cmd .prompt{color:var(--accent-2);}
@@ -405,11 +435,11 @@ body.cursor-active #cursor{opacity:1;}
 /* ════════════════════════════════════════════════════════════ */
 .values-grid{
   display:grid;
-  grid-template-columns:repeat(4,1fr);
+  grid-template-columns:repeat(3,1fr);
   gap:1px;
   background:var(--line);
 }
-@media(max-width:1100px){.values-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:900px){.values-grid{grid-template-columns:1fr;}}
 @media(max-width:540px){.values-grid{grid-template-columns:1fr;}}
 
 .value-card{
@@ -463,11 +493,11 @@ body.cursor-active #cursor{opacity:1;}
   margin:0 auto;
   padding:0 88px;
   display:grid;
-  grid-template-columns:repeat(3,1fr);
+  grid-template-columns:repeat(4,1fr);
   border-top:1px solid var(--dark-line);
   border-bottom:1px solid var(--dark-line);
 }
-@media(max-width:1100px){.stats-bar-inner{padding:0 48px;}}
+@media(max-width:1100px){.stats-bar-inner{padding:0 48px;grid-template-columns:repeat(2,1fr);}}
 @media(max-width:768px){.stats-bar-inner{padding:0 24px;}}
 @media(max-width:480px){.stats-bar-inner{padding:0 20px;grid-template-columns:1fr;}}
 
@@ -758,6 +788,100 @@ footer{
   justify-content:space-between;
 }
 .footer-bottom .crumb{color:oklch(0.35 0.01 270);}
+
+/* ── CEO callout ─────────────────────────────────────────────── */
+.ceo-callout{
+  margin-top:56px;
+  background:var(--dark);
+  border-left:3px solid var(--accent);
+  padding:40px 48px;
+  color:var(--paper);
+}
+@media(max-width:768px){.ceo-callout{padding:28px 28px;}}
+.ceo-callout-label{
+  font-family:var(--t-mono);
+  font-size:11px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--accent-2);
+  margin-bottom:16px;
+}
+.ceo-callout-text{
+  font-size:clamp(16px, 1.7vw, 22px);
+  line-height:1.5;
+  color:var(--paper);
+}
+.ceo-callout-meta{
+  margin-top:20px;
+  font-family:var(--t-mono);
+  font-size:11px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:oklch(0.42 0.01 270);
+}
+/* ── Step price label ────────────────────────────────────────── */
+.step-price{
+  margin-top:6px;
+  font-family:var(--t-mono);
+  font-size:12px;
+  letter-spacing:.06em;
+  color:var(--ink-4);
+}
+
+/* ── Case CTA card ───────────────────────────────────────────── */
+.case-cta{
+  background:var(--dark);
+  padding:40px 32px;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  gap:20px;
+  min-height:220px;
+  margin-top:32px;
+}
+@media(max-width:1200px){.case-cta{margin-top:0;}}
+.case-cta-label{
+  font-family:var(--t-mono);
+  font-size:11px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:oklch(0.42 0.01 270);
+}
+.case-cta-text{
+  font-size:clamp(22px, 2.2vw, 30px);
+  font-weight:500;
+  letter-spacing:-.02em;
+  line-height:1.2;
+  color:var(--paper);
+}
+.case-cta-link{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  font-family:var(--t-mono);
+  font-size:11px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--paper);
+  background:var(--accent);
+  padding:12px 22px;
+  transition:background .2s;
+  width:fit-content;
+}
+.case-cta-link:hover{background:oklch(0.36 0.13 28);}
+
+/* ── Footer links column ─────────────────────────────────────── */
+.footer-links{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.footer-links a{
+  font-size:14px;
+  color:oklch(0.55 0.01 270);
+  transition:color .2s;
+}
+.footer-links a:hover{color:var(--paper);}
 </style>
 </head>
 <body>
@@ -779,7 +903,7 @@ footer{
         </svg>
       </span>
       <span class="wm" style="font-size:26px;">
-        <span>tenxa</span>
+        <span>TenXa</span>
         <svg viewBox="0 0 30 100" style="width:7.8px;height:26px;margin-left:0.5px;" aria-hidden="true">
           <rect class="wm-dot" x="10" y="24" width="10" height="12" fill="var(--accent)"/>
           <rect class="wm-stem" x="10" y="48" width="10" height="52" fill="currentColor"/>
@@ -787,10 +911,11 @@ footer{
       </span>
     </a>
     <ul class="nav-links" role="navigation">
-      <li><a href="#cases">cases</a></li>
-      <li><a href="#method">method</a></li>
-      <li><a href="#contact">team</a></li>
-      <li><a href="#contact">contact</a></li>
+      <li><a href="#method">Usługi</a></li>
+      <li><a href="#values">O nas</a></li>
+      <li><a href="#contact">KSA</a></li>
+      <li><a href="#contact">Kontakt</a></li>
+      <li><a href="#contact" class="btn-primary" style="padding:10px 20px;font-size:10px;">Umów AI Audit →</a></li>
     </ul>
   </div>
 </nav>
@@ -800,25 +925,21 @@ footer{
   <div class="hero-inner">
 
     <div class="hero-crumb">
-      <span class="crumb">AI operating core</span>
+      <span class="crumb">AI jako rdzeń operacyjny</span>
       <span class="hero-crumb-sep">·</span>
       <span class="crumb">v01</span>
       <span class="hero-crumb-sep">·</span>
       <span class="crumb">warszawa · 2026</span>
     </div>
 
-    <div class="hero-wm" aria-label="tenxai">
-      <span>tenxa</span>
-      <svg viewBox="0 0 30 100" aria-hidden="true"
-        style="height:1em; width:.3em; margin-left:.02em;">
-        <rect class="wm-dot" x="10" y="24" width="10" height="12" fill="var(--accent)"/>
-        <rect class="wm-stem" x="10" y="48" width="10" height="52" fill="var(--paper)"/>
-      </svg>
-    </div>
+    <h1 class="hero-wm">Twoja firma.<br>Wzmocniona przez AI.</h1>
 
     <div class="hero-sub">
-      <p data-pretext>AI as the operating core, not a tool bolted onto IT.</p>
-      <p data-pretext>10× faster. Domain expertise embedded. Quiet confidence.</p>
+      <p data-pretext>Nie wdrażamy oprogramowania. Budujemy przewagę. Eksperci z Twojej branży + własne narzędzia AI.</p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn-primary">→ Umów AI Audit</a>
+        <a href="#method" class="btn-ghost">→ Zobacz jak działamy</a>
+      </div>
     </div>
 
     <div class="hero-bottom">
@@ -869,11 +990,11 @@ footer{
 <section class="section section-bg-paper" id="values" aria-labelledby="values-title">
   <div class="inner">
     <div class="section-head">
-      <span class="crumb">01 · essence</span>
-      <span class="crumb">what we stand for</span>
+      <span class="crumb">01 · o nas</span>
+      <span class="crumb">co nas wyróżnia</span>
     </div>
 
-    <h2 class="section-title reveal" id="values-title">Four words.</h2>
+    <h2 class="section-title reveal" id="values-title">Nie jesteśmy firmą IT,<br>która dodała AI.</h2>
 
     <div class="values-grid">
 
@@ -883,8 +1004,8 @@ footer{
         <span class="tick bl" aria-hidden="true"></span>
         <span class="tick br" aria-hidden="true"></span>
         <div class="value-idx">01</div>
-        <div class="value-num" data-pretext>Inteligencja</div>
-        <p class="value-body" data-pretext>Domain understanding, deeply embedded. The brand reads as someone who has run the business, not just built the software.</p>
+        <div class="value-num" data-pretext>Eksperci<br>w Twojej branży</div>
+        <p class="value-body" data-pretext>Nasi specjaliści rozumieją gastro, fintech, medtech i handel — nie tylko technologię. Wiemy, co boli operacyjnie. Budujemy AI dla konkretnych problemów, nie dla portfolio.</p>
       </article>
 
       <article class="value-card reveal reveal-delay-2">
@@ -893,8 +1014,8 @@ footer{
         <span class="tick bl" aria-hidden="true"></span>
         <span class="tick br" aria-hidden="true"></span>
         <div class="value-idx">02</div>
-        <div class="value-num" data-pretext>Szybkość</div>
-        <p class="value-body" data-pretext>The 10× in tenxai. Compress weeks of operational work into seconds — tight type, no filler, nothing wasted.</p>
+        <div class="value-num" data-pretext>Własne<br>narzędzia AI</div>
+        <p class="value-body" data-pretext>Żadnych gotowych wtyczek. Budujemy agenty, dashboardy i modele dopasowane do Twojej firmy. Twoje dane, Twoja logika, Twoje wyniki.</p>
       </article>
 
       <article class="value-card reveal reveal-delay-3">
@@ -903,18 +1024,8 @@ footer{
         <span class="tick bl" aria-hidden="true"></span>
         <span class="tick br" aria-hidden="true"></span>
         <div class="value-idx">03</div>
-        <div class="value-num" data-pretext>Precyzja</div>
-        <p class="value-body" data-pretext>Engineering register. Mono numerals, hairlines, ticks. Nothing decorative. The accent dot is the only color permitted.</p>
-      </article>
-
-      <article class="value-card reveal reveal-delay-4">
-        <span class="tick tl" aria-hidden="true"></span>
-        <span class="tick tr" aria-hidden="true"></span>
-        <span class="tick bl" aria-hidden="true"></span>
-        <span class="tick br" aria-hidden="true"></span>
-        <div class="value-idx">04</div>
-        <div class="value-num" data-pretext>Zaufanie</div>
-        <p class="value-body" data-pretext>Quiet confidence. Premium materials, measured pace. We never sell with hype — the work speaks for itself.</p>
+        <div class="value-num" data-pretext>Ciągłe<br>partnerstwo</div>
+        <p class="value-body" data-pretext>Model abonamentowy oznacza, że jesteśmy z Tobą na stałe. AI doskonali się razem z firmą. Płacisz za wyniki — nie za godziny.</p>
       </article>
 
     </div>
@@ -926,21 +1037,27 @@ footer{
   <div class="stats-bar-inner">
 
     <div class="bar-stat reveal">
-      <div class="bar-stat-num"><span>9</span>&thinsp;d&thinsp;→&thinsp;<span>36</span>&thinsp;min</div>
-      <div class="bar-stat-label">czas zamknięcia · spraw</div>
-      <p class="bar-stat-sub">Czas rozwiązania spraw w kooperatywie CF-Grain po wdrożeniu.</p>
+      <div class="bar-stat-num"><span>2</span>&thinsp;dni</div>
+      <div class="bar-stat-label">AI Audit · czas realizacji</div>
+      <p class="bar-stat-sub">Mapa procesów gotowa do automatyzacji i plan ROI. Zero lania wody.</p>
     </div>
 
     <div class="bar-stat reveal reveal-delay-1">
-      <div class="bar-stat-num">0.91</div>
-      <div class="bar-stat-label">confidence · score</div>
-      <p class="bar-stat-sub">Średni poziom pewności agenta domenowego w ocenie underwritingowej.</p>
+      <div class="bar-stat-num"><span>3</span>&thinsp;rynki</div>
+      <div class="bar-stat-label">PL · UAE · KSA</div>
+      <p class="bar-stat-sub">Działamy na trzech rynkach z lokalnymi ekspertami dziedzinowymi.</p>
     </div>
 
     <div class="bar-stat reveal reveal-delay-2">
-      <div class="bar-stat-num">14</div>
-      <div class="bar-stat-label">silosów · sieć</div>
-      <p class="bar-stat-sub">Liczba silosów zbożowych obsługiwanych w jednej sieci operacyjnej.</p>
+      <div class="bar-stat-num"><span>100</span>%</div>
+      <div class="bar-stat-label">własnych narzędzi</div>
+      <p class="bar-stat-sub">Żadnego off-the-shelf. Każde rozwiązanie budujemy od zera dla Twojej firmy.</p>
+    </div>
+
+    <div class="bar-stat reveal reveal-delay-3">
+      <div class="bar-stat-num" style="font-size:clamp(18px,2vw,28px);letter-spacing:-.01em;line-height:1.2;padding-top:8px;">gastro<br>fintech<br>medtech</div>
+      <div class="bar-stat-label">branże · portfolio</div>
+      <p class="bar-stat-sub">Hospitality, usługi finansowe, medtech i handel — AI dopasowane do każdej.</p>
     </div>
 
   </div>
@@ -950,53 +1067,54 @@ footer{
 <section class="section section-bg-paper" id="method" aria-labelledby="method-title">
   <div class="inner">
     <div class="section-head">
-      <span class="crumb">02 · method</span>
+      <span class="crumb">02 · usługi</span>
       <span class="crumb">jak działamy</span>
     </div>
 
     <div class="method-layout">
-      <h2 class="method-title reveal" id="method-title">Domain expertise<br>× AI.</h2>
+      <h2 class="method-title reveal" id="method-title">Trzy ścieżki.<br>Jedna zasada:<br>konkretny wynik.</h2>
 
       <div class="method-steps" role="list">
 
         <div class="method-step reveal" role="listitem">
           <div class="step-idx">01</div>
           <div class="step-content">
-            <div class="step-name">Diagnoza operacyjna</div>
-            <p class="step-body" data-pretext>Zaczynamy od procesu, nie od technologii. Mapujemy silosy decyzyjne, identyfikujemy wąskie gardła i mierzymy koszt każdego dnia opóźnienia.</p>
-            <div class="step-tag">warstwa · domenowa</div>
+            <div class="step-name">AI Audit</div>
+            <div class="step-price">3 000 – 5 000 zł</div>
+            <p class="step-body" data-pretext>2 dni. Wychodzimy z mapą procesów gotową do automatyzacji i planem ROI. Zero lania wody.</p>
+            <div class="step-tag">czas realizacji · 2 dni</div>
           </div>
         </div>
 
         <div class="method-step reveal reveal-delay-1" role="listitem">
           <div class="step-idx">02</div>
           <div class="step-content">
-            <div class="step-name">Budowa agenta domenowego</div>
-            <p class="step-body" data-pretext>Projektujemy agenta, który rozumie branżę — jej język, precedensy, obostrzenia prawne. Nie generyczny chatbot, lecz specjalista osadzony w Twojej operacji.</p>
-            <div class="step-tag">warstwa · AI</div>
+            <div class="step-name">AI Deploy</div>
+            <div class="step-price">15 000 – 40 000 zł</div>
+            <p class="step-body" data-pretext>Wdrożenie jednego agenta AI lub dashboardu analitycznego. Działa. Mierzysz wyniki od dnia 1.</p>
+            <div class="step-tag">jeden agent · jeden wynik</div>
           </div>
         </div>
 
         <div class="method-step reveal reveal-delay-2" role="listitem">
           <div class="step-idx">03</div>
           <div class="step-content">
-            <div class="step-name">Integracja z procesem</div>
-            <p class="step-body" data-pretext>Agent trafia do istniejących narzędzi — systemów ERP, CRM, formularzy. Zero friction dla zespołu. Wdrożenie bez zmiany nawyków operacyjnych.</p>
-            <div class="step-tag">warstwa · integracji</div>
-          </div>
-        </div>
-
-        <div class="method-step reveal reveal-delay-3" role="listitem">
-          <div class="step-idx">04</div>
-          <div class="step-content">
-            <div class="step-name">Ciągła walidacja</div>
-            <p class="step-body" data-pretext>Każda decyzja agenta jest śledzona, mierzona i audytowalna. Conf score, cite count, drift detection — pełna przejrzystość dla compliance i zarządu.</p>
-            <div class="step-tag">warstwa · monitoringu</div>
+            <div class="step-name">AI Partner</div>
+            <div class="step-price">od 5 000 zł / mies.</div>
+            <p class="step-body" data-pretext>Jesteśmy częścią Twojego zespołu. Stały monitoring, ciągłe doskonalenie, nowe agenty w miarę potrzeb.</p>
+            <div class="step-tag">model · abonamentowy</div>
           </div>
         </div>
 
       </div>
     </div>
+
+    <div class="ceo-callout reveal">
+      <div class="ceo-callout-label">dla Prezesa · CEO dashboard</div>
+      <p class="ceo-callout-text">Masz pełen obraz firmy na jednym dashboardzie stworzonym dla Ciebie. Żadnych tabelek w Excelu. Żadnych raportów zbieranych ręcznie. Jeden ekran. Wszystko co ważne — w czasie rzeczywistym.</p>
+      <div class="ceo-callout-meta">real-time · zero excel · zero ręcznych raportów</div>
+    </div>
+
   </div>
 </section>
 
@@ -1004,11 +1122,11 @@ footer{
 <section class="section section-bg-paper2" id="cases" aria-labelledby="cases-title">
   <div class="inner">
     <div class="section-head">
-      <span class="crumb">03 · cases</span>
-      <span class="crumb">the work</span>
+      <span class="crumb">03 · case studies</span>
+      <span class="crumb">efekty, nie prezentacje</span>
     </div>
 
-    <h2 class="section-title reveal" id="cases-title">The work.</h2>
+    <h2 class="section-title reveal" id="cases-title">Efekty,<br>nie prezentacje.</h2>
 
     <div class="cases-grid">
 
@@ -1018,13 +1136,13 @@ footer{
         <span class="tick bl" aria-hidden="true"></span>
         <span class="tick br" aria-hidden="true"></span>
         <div class="case-tag">
-          <span class="dot" aria-hidden="true"></span>case · 042 · cf-grain
+          <span class="dot" aria-hidden="true"></span>gastro · hospitality
         </div>
-        <div class="case-metric" data-count="95" data-prefix="−" data-suffix="%" data-decimals="0">−95%</div>
-        <p class="case-desc" data-pretext>Czas zamykania spraw asekuracyjnych dla 14 silosów zbożowych skrócony z 9 dni do 36 minut. Agent domenowy z 14 narzędziami, 2 reviewerami.</p>
+        <div class="case-metric" data-count="3" data-prefix="" data-suffix=" min" data-decimals="0">3 min</div>
+        <p class="case-desc" data-pretext>Ritual Club Warsaw — nocny klub, 500+ gości tygodniowo. AI raportowanie nocne: zero ręcznych raportów, pełna analiza w 3 minuty po zamknięciu.</p>
         <div class="case-meta">
-          <span>q2 · 2026</span>
-          <span>conf · 0.91</span>
+          <span>Ritual Club · Warsaw</span>
+          <span>gastro · 2025</span>
         </div>
       </article>
 
@@ -1034,13 +1152,13 @@ footer{
         <span class="tick bl" aria-hidden="true"></span>
         <span class="tick br" aria-hidden="true"></span>
         <div class="case-tag">
-          <span class="dot" aria-hidden="true"></span>case · 038 · underwriting
+          <span class="dot" aria-hidden="true"></span>gastro · F&amp;B
         </div>
-        <div class="case-metric" data-count="10" data-prefix="" data-suffix="×" data-decimals="0">10×</div>
-        <p class="case-desc" data-pretext>Przyspieszenie procesu underwritingu w firmie ubezpieczeniowej. Automatyczna klasyfikacja ryzyka, walidacja dokumentów, generowanie rekomendacji.</p>
+        <div class="case-metric" data-count="100" data-prefix="" data-suffix="%" data-decimals="0">100%</div>
+        <p class="case-desc" data-pretext>Leila Mezze &amp; Lounge — restauracja, eventy, catering. AI analiza eventów + optymalizacja revenue. Prognozy frekwencji przed każdym eventem.</p>
         <div class="case-meta">
-          <span>q1 · 2026</span>
-          <span>conf · 0.87</span>
+          <span>Leila Mezze · Warsaw</span>
+          <span>F&amp;B · 2025</span>
         </div>
       </article>
 
@@ -1050,31 +1168,21 @@ footer{
         <span class="tick bl" aria-hidden="true"></span>
         <span class="tick br" aria-hidden="true"></span>
         <div class="case-tag">
-          <span class="dot" aria-hidden="true"></span>case · 031 · legal-ops
+          <span class="dot" aria-hidden="true"></span>fintech · trading
         </div>
-        <div class="case-metric" data-count="1.84" data-prefix="" data-suffix="s" data-decimals="2">1.84s</div>
-        <p class="case-desc" data-pretext>Analiza umów prawnych w czasie zbliżonym do rzeczywistego. Wykrywanie klauzul ryzyka, weryfikacja zgodności z regulacjami, raport w 1.84s.</p>
+        <div class="case-metric" data-count="24" data-prefix="" data-suffix="/7" data-decimals="0">24/7</div>
+        <p class="case-desc" data-pretext>Trading Agent — automatyzacja analiz rynkowych. Agent monitoruje sygnały 24/7, generuje raporty i alerty — bez zaangażowania człowieka.</p>
         <div class="case-meta">
-          <span>q4 · 2025</span>
-          <span>cite · 7</span>
+          <span>Trading Agent</span>
+          <span>fintech · 2026</span>
         </div>
       </article>
 
-      <article class="case-card reveal reveal-delay-3">
-        <span class="tick tl" aria-hidden="true"></span>
-        <span class="tick tr" aria-hidden="true"></span>
-        <span class="tick bl" aria-hidden="true"></span>
-        <span class="tick br" aria-hidden="true"></span>
-        <div class="case-tag">
-          <span class="dot" aria-hidden="true"></span>case · 027 · procurement
-        </div>
-        <div class="case-metric" data-count="78" data-prefix="−" data-suffix="%" data-decimals="0">−78%</div>
-        <p class="case-desc" data-pretext>Redukcja czasu przygotowania raportów audytowych. Automatyczna agregacja danych z 6 systemów ERP, walidacja zgodności, raport gotowy w 4 minuty.</p>
-        <div class="case-meta">
-          <span>q3 · 2025</span>
-          <span>conf · 0.94</span>
-        </div>
-      </article>
+      <div class="case-cta reveal reveal-delay-3">
+        <div class="case-cta-label">następny case</div>
+        <div class="case-cta-text">Chcesz być<br>następny?</div>
+        <a href="#contact" class="case-cta-link">→ Umów AI Audit</a>
+      </div>
 
     </div>
   </div>
@@ -1085,7 +1193,7 @@ footer{
   <div class="inner">
 
     <div class="footer-wm" aria-label="tenxai">
-      <span>tenxa</span>
+      <span>TenXa</span>
       <svg viewBox="0 0 30 100" aria-hidden="true"
         style="height:1em; width:.3em; margin-left:.02em;">
         <rect class="wm-dot" x="10" y="24" width="10" height="12"/>
@@ -1095,24 +1203,29 @@ footer{
 
     <div class="footer-grid">
       <div class="footer-col">
-        <div class="footer-label">contact</div>
+        <div class="footer-label">tenxai</div>
+        <div class="footer-val">Eksperci dziedzinowi + własne narzędzia AI.</div>
+        <div class="footer-val" style="margin-top:8px;font-size:13px;">Polska · KSA · UAE</div>
+      </div>
+      <div class="footer-col">
+        <div class="footer-label">kontakt</div>
         <div class="footer-val">hello@tenxai.pl</div>
-        <a class="footer-cta" href="mailto:hello@tenxai.pl">napisz do nas</a>
+        <a class="footer-cta" href="mailto:hello@tenxai.pl">Napisz do nas</a>
       </div>
       <div class="footer-col">
-        <div class="footer-label">studio</div>
-        <div class="footer-val">Warszawa · pl</div>
-      </div>
-      <div class="footer-col">
-        <div class="footer-label">version</div>
-        <div class="footer-val">v01 · 8.05.2026</div>
+        <div class="footer-label">linki</div>
+        <div class="footer-links">
+          <a href="#method">Usługi</a>
+          <a href="#values">O nas</a>
+          <a href="#contact">KSA</a>
+          <a href="#contact">Kontakt</a>
+        </div>
       </div>
       <div class="footer-col"></div>
     </div>
 
     <div class="footer-bottom">
-      <span class="crumb">tenxai · brand system · 2026</span>
-      <span class="crumb">inteligencja · szybkość · precyzja · zaufanie</span>
+      <span class="crumb">© 2026 tenxai PSA. Wszystkie prawa zastrzeżone.</span>
     </div>
 
   </div>
