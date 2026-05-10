@@ -146,7 +146,7 @@ body.cursor-active #cursor{opacity:1;}
 .nav-logo{
   display:flex;
   align-items:center;
-  gap:12px;
+  gap:14px;
   color:var(--paper);
   transition:color .2s;
 }
@@ -154,7 +154,16 @@ body.cursor-active #cursor{opacity:1;}
 #nav.scrolled .nav-logo{color:var(--ink);}
 #nav.scrolled .nav-logo .wm-dot{fill:var(--accent);}
 
-.nav-logo .mono-x{width:22px;height:22px;}
+.nav-logo .mono-x{width:33px;height:33px;}
+
+/* blinking red dot on nav logo i */
+.nav-logo .wm-dot{
+  animation:dot-blink 1.4s ease-in-out infinite;
+}
+@keyframes dot-blink{
+  0%,100%{opacity:1;}
+  50%{opacity:0;}
+}
 
 .nav-links{
   display:flex;
@@ -921,9 +930,9 @@ footer{
           <path d="M 80 22 L 88 22 L 88 12 L 80 12 Z" fill="var(--accent)"/>
         </svg>
       </span>
-      <span class="wm" style="font-size:26px;">
+      <span class="wm" style="font-size:39px;">
         <span>TenXa</span>
-        <svg viewBox="0 0 30 100" style="width:7.8px;height:26px;margin-left:0.5px;" aria-hidden="true">
+        <svg viewBox="0 0 30 100" style="width:11.7px;height:39px;margin-left:0.5px;" aria-hidden="true">
           <rect class="wm-dot" x="10" y="24" width="10" height="12" fill="var(--accent)"/>
           <rect class="wm-stem" x="10" y="48" width="10" height="52" fill="currentColor"/>
         </svg>
