@@ -1379,21 +1379,26 @@ var x0=["BN","BN","BN","BN","BN","BN","BN","BN","BN","S","B","S","WS","B","BN","
   });
 
   /* ── Hero title typewriter ───────────────────────────── */
+  /* każde hasło ma 3 jawne linie (\n → <br>) */
   var HERO_TEXTS = [
-    'Stworzymy Twoje centrum dowodzenia.',
-    'Automatyzujemy. Mierzymy. Doskonalimy.',
-    'AI jako rdzeń — nie dodatek.'
+    'Stworzymy\nTwoje centrum\ndownodzenia.',
+    'Automatyzujemy.\nMierzymy.\nDoskonalimy.',
+    'AI jako rdzeń.\nNie plugin.\nNie chatbot.'
   ];
   var heroTyped    = document.getElementById('hero-typed');
   var heroPhaseIdx = 0;
   var heroHChar    = 0;
   var heroErasing  = false;
 
+  function setHeroHtml(slice) {
+    heroTyped.innerHTML = slice.replace(/\n/g, '<br>');
+  }
+
   function typeHero() {
     if (!heroTyped) return;
     var cur = HERO_TEXTS[heroPhaseIdx];
     if (!heroErasing) {
-      heroTyped.textContent = cur.slice(0, heroHChar);
+      setHeroHtml(cur.slice(0, heroHChar));
       if (heroHChar < cur.length) {
         heroHChar++;
         setTimeout(typeHero, 52 + Math.random() * 28);
@@ -1404,7 +1409,7 @@ var x0=["BN","BN","BN","BN","BN","BN","BN","BN","BN","S","B","S","WS","B","BN","
     } else {
       if (heroHChar > 0) {
         heroHChar--;
-        heroTyped.textContent = cur.slice(0, heroHChar);
+        setHeroHtml(cur.slice(0, heroHChar));
         setTimeout(typeHero, 18 + Math.random() * 10);
       } else {
         heroErasing = false;
