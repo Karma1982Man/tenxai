@@ -24,7 +24,7 @@
   --dark-line: oklch(0.28 0.01 270);
   --t-sans: "Space Grotesk", system-ui, sans-serif;
   --t-mono: "JetBrains Mono", ui-monospace, monospace;
-  --nav-h: 64px;
+  --nav-h: 88px;
 }
 
 /* ── Reset ─────────────────────────────────────────────────── */
@@ -138,23 +138,28 @@ body.cursor-active #cursor{opacity:1;}
   height:100%;
   display:flex;
   align-items:center;
-  justify-content:space-between;
+  justify-content:flex-end; /* links right; logo is absolutely centered */
+  position:relative;
 }
 @media(max-width:1100px){.nav-inner{padding:0 48px;}}
 @media(max-width:768px){.nav-inner{padding:0 24px;}}
 
 .nav-logo{
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
   display:flex;
   align-items:center;
-  gap:14px;
+  gap:16px;
   color:var(--paper);
   transition:color .2s;
+  white-space:nowrap;
 }
 .nav-logo:hover{color:var(--paper);}
 #nav.scrolled .nav-logo{color:var(--ink);}
 #nav.scrolled .nav-logo .wm-dot{fill:var(--accent);}
 
-.nav-logo .mono-x{width:33px;height:33px;}
+.nav-logo .mono-x{width:44px;height:44px;}
 
 /* blinking red dot on nav logo i */
 .nav-logo .wm-dot{
@@ -252,11 +257,11 @@ body.cursor-active #cursor{opacity:1;}
 /* Old-school blinking block cursor */
 .hero-cursor{
   display:inline-block;
-  width:.48em;
-  height:.84em;
+  width:.28em;
+  height:.72em;
   background:var(--paper);
-  vertical-align:-.05em;
-  margin-left:3px;
+  vertical-align:-.04em;
+  margin-left:2px;
   animation:blink .75s step-end infinite;
 }
 
@@ -930,9 +935,9 @@ footer{
           <path d="M 80 22 L 88 22 L 88 12 L 80 12 Z" fill="var(--accent)"/>
         </svg>
       </span>
-      <span class="wm" style="font-size:39px;">
+      <span class="wm" style="font-size:72px;">
         <span>TenXa</span>
-        <svg viewBox="0 0 30 100" style="width:11.7px;height:39px;margin-left:0.5px;" aria-hidden="true">
+        <svg viewBox="0 0 30 100" style="width:21.6px;height:72px;margin-left:0.5px;" aria-hidden="true">
           <rect class="wm-dot" x="10" y="24" width="10" height="12" fill="var(--accent)"/>
           <rect class="wm-stem" x="10" y="48" width="10" height="52" fill="currentColor"/>
         </svg>
