@@ -1502,12 +1502,12 @@ var x0=["BN","BN","BN","BN","BN","BN","BN","BN","BN","S","B","S","WS","B","BN","
   setTimeout(function() { typeNext(); }, 900);
 
   /* ── Pretext text layout ─────────────────────────────── */
-  /* ── Case metric counters ───────────────────────────── */
-  var caseCountersDone = false;
+  /* ── Case metric counters (replay every scroll-in) ──── */
+  var caseAnimVer = 0; /* version counter cancels old RAF loops */
 
   function startCaseCounters() {
-    if (caseCountersDone) return;
-    caseCountersDone = true;
+    caseAnimVer++;
+    var myVer = caseAnimVer;
     document.querySelectorAll('.case-metric[data-count]').forEach(function(el, i) {
       var target   = parseFloat(el.dataset.count);
       var suffix   = el.dataset.suffix || '';
@@ -1515,9 +1515,11 @@ var x0=["BN","BN","BN","BN","BN","BN","BN","BN","BN","S","B","S","WS","B","BN","
       var decimals = parseInt(el.dataset.decimals, 10);
       var duration = 1200 + i * 150;
       var start    = performance.now();
-      // start from 0, ease out
+      /* reset to 0 so each replay starts from scratch */
+      el.textContent = prefix + (0).toFixed(decimals) + suffix;
       (function step(now) {
-        var t   = Math.min((now - start) / duration, 1);
+        if (caseAnimVer !== myVer) return; /* cancelled by newer run */
+        var t    = Math.min((now - start) / duration, 1);
         var ease = 1 - Math.pow(1 - t, 3);
         el.textContent = prefix + (target * ease).toFixed(decimals) + suffix;
         if (t < 1) requestAnimationFrame(step);
@@ -1528,6 +1530,7 @@ var x0=["BN","BN","BN","BN","BN","BN","BN","BN","BN","S","B","S","WS","B","BN","
 
   var casesSection = document.getElementById('cases');
   if (casesSection) {
+    /* threshold 0.15 — fires each time section enters viewport */
     new IntersectionObserver(function(entries) {
       if (entries[0].isIntersecting) startCaseCounters();
     }, { threshold: 0.15 }).observe(casesSection);
