@@ -228,15 +228,26 @@ body.cursor-active #cursor{opacity:1;}
 
 .hero-wm{
   color:var(--paper);
-  font-size:clamp(52px, 10vw, 148px);
-  line-height:.96;
-  letter-spacing:-.04em;
+  font-size:clamp(30px, 5.6vw, 80px);
+  line-height:1.05;
+  letter-spacing:-.035em;
   font-weight:500;
   font-family:var(--t-sans);
   margin-bottom:36px;
 }
 @media(max-width:768px){.hero-wm{margin-bottom:28px;}}
 @media(max-width:480px){.hero-wm{margin-bottom:20px;}}
+
+/* Old-school blinking block cursor */
+.hero-cursor{
+  display:inline-block;
+  width:.48em;
+  height:.84em;
+  background:var(--paper);
+  vertical-align:-.05em;
+  margin-left:3px;
+  animation:blink .75s step-end infinite;
+}
 
 .hero-sub{
   display:flex;
@@ -326,7 +337,13 @@ body.cursor-active #cursor{opacity:1;}
   padding-left:14px;
   color:oklch(0.55 0.01 270);
 }
-.terminal-body .gap{height:8px;}
+.terminal-body .gap{height:12px;}
+.terminal-body .term-point{
+  color:oklch(0.9 0.005 80);
+  font-size:14px;
+  line-height:2;
+  letter-spacing:.01em;
+}
 .terminal-cursor{
   display:inline-block;
   width:8px;height:13px;
@@ -932,7 +949,7 @@ footer{
       <span class="crumb">warszawa · 2026</span>
     </div>
 
-    <h1 class="hero-wm">Twoja firma.<br>Wzmocniona przez AI.</h1>
+    <h1 class="hero-wm" id="hero-title"><span id="hero-typed"></span><span class="hero-cursor" aria-hidden="true"></span></h1>
 
     <div class="hero-sub">
       <p data-pretext>Nie wdrażamy oprogramowania. Budujemy przewagę. Eksperci z Twojej branży + własne narzędzia AI.</p>
@@ -1359,16 +1376,52 @@ var x0=["BN","BN","BN","BN","BN","BN","BN","BN","BN","S","B","S","WS","B","BN","
     revealObserver.observe(el);
   });
 
+  /* ── Hero title typewriter ───────────────────────────── */
+  var HERO_TEXTS = [
+    'Stworzymy Twoje centrum dowodzenia.',
+    'Automatyzujemy. Mierzymy. Doskonalimy.',
+    'AI jako rdzeń — nie dodatek.'
+  ];
+  var heroTyped    = document.getElementById('hero-typed');
+  var heroPhaseIdx = 0;
+  var heroHChar    = 0;
+  var heroErasing  = false;
+
+  function typeHero() {
+    if (!heroTyped) return;
+    var cur = HERO_TEXTS[heroPhaseIdx];
+    if (!heroErasing) {
+      heroTyped.textContent = cur.slice(0, heroHChar);
+      if (heroHChar < cur.length) {
+        heroHChar++;
+        setTimeout(typeHero, 52 + Math.random() * 28);
+      } else {
+        heroErasing = true;
+        setTimeout(typeHero, 2400);
+      }
+    } else {
+      if (heroHChar > 0) {
+        heroHChar--;
+        heroTyped.textContent = cur.slice(0, heroHChar);
+        setTimeout(typeHero, 18 + Math.random() * 10);
+      } else {
+        heroErasing = false;
+        heroPhaseIdx = (heroPhaseIdx + 1) % HERO_TEXTS.length;
+        setTimeout(typeHero, 300);
+      }
+    }
+  }
+  setTimeout(typeHero, 500);
+
   /* ── Terminal typewriter ─────────────────────────────── */
   var TERMINAL_LINES = [
-    { text: '\u203a agent.bind("underwriting.v3")', cls: 'cmd' },
-    { text: '  \u21b3 bound \u00b7 14 tools \u00b7 2 reviewers', cls: 'out' },
+    { text: '\u00b7 Identyfikujemy.', cls: 'term-point' },
     { text: '', cls: 'gap' },
-    { text: '\u203a run --case 0421', cls: 'cmd' },
-    { text: '  \u21b3 ok \u00b7 1.84s \u00b7 cite=7 \u00b7 conf=0.91', cls: 'out' },
+    { text: '\u00b7 Budujemy.', cls: 'term-point' },
     { text: '', cls: 'gap' },
-    { text: '\u203a status --all', cls: 'cmd' },
-    { text: '  \u21b3 14/14 silos \u00b7 uptime 99.97%', cls: 'out' },
+    { text: '\u00b7 Optymalizujemy.', cls: 'term-point' },
+    { text: '', cls: 'gap' },
+    { text: '\u00b7 Mierzymy.', cls: 'term-point' },
   ];
 
   var termBody = document.getElementById('terminal-body');
@@ -1376,15 +1429,18 @@ var x0=["BN","BN","BN","BN","BN","BN","BN","BN","BN","S","B","S","WS","B","BN","
   var termCharIdx = 0;
   var termCurrentLine = null;
 
-  function renderPrompt(text) {
-    if (text.startsWith('\u203a') || text.startsWith('›')) {
-      return '<span class="prompt">›</span>' + escHtml(text.slice(1));
-    }
-    return escHtml(text);
-  }
-
   function escHtml(s) {
     return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  function renderLine(text, cls) {
+    if (cls === 'term-point' && text.length > 0 && text.charCodeAt(0) === 0xB7) {
+      return '<span style="color:var(--accent-2)">\u00b7</span>' + escHtml(text.slice(1));
+    }
+    if (text.startsWith('\u203a')) {
+      return '<span class="prompt">\u203a</span>' + escHtml(text.slice(1));
+    }
+    return escHtml(text);
   }
 
   function clearTerminal() {
@@ -1396,11 +1452,10 @@ var x0=["BN","BN","BN","BN","BN","BN","BN","BN","BN","S","B","S","WS","B","BN","
 
   function typeLine() {
     if (termLineIdx >= TERMINAL_LINES.length) {
-      // Show cursor, then restart after pause
       var cursorSpan = document.createElement('span');
       cursorSpan.className = 'terminal-cursor';
       termBody.appendChild(cursorSpan);
-      setTimeout(function() { clearTerminal(); typeNext(); }, 3200);
+      setTimeout(function() { clearTerminal(); typeNext(); }, 2800);
       return;
     }
 
@@ -1412,7 +1467,7 @@ var x0=["BN","BN","BN","BN","BN","BN","BN","BN","BN","S","B","S","WS","B","BN","
       termBody.appendChild(gapEl);
       termLineIdx++;
       termCharIdx = 0;
-      setTimeout(typeNext, 120);
+      setTimeout(typeNext, 80);
       return;
     }
 
@@ -1423,17 +1478,19 @@ var x0=["BN","BN","BN","BN","BN","BN","BN","BN","BN","S","B","S","WS","B","BN","
     }
 
     var fullText = lineData.text;
-    var isCmd = lineData.cls === 'cmd';
+    var isPoint = lineData.cls === 'term-point';
+    var isCmd   = lineData.cls === 'cmd';
 
     if (termCharIdx < fullText.length) {
-      termCurrentLine.innerHTML = renderPrompt(fullText.slice(0, termCharIdx + 1));
+      termCurrentLine.innerHTML = renderLine(fullText.slice(0, termCharIdx + 1), lineData.cls);
       termCharIdx++;
-      var delay = isCmd ? 38 + Math.random() * 24 : 14 + Math.random() * 8;
+      var delay = isPoint ? (46 + Math.random() * 32) : isCmd ? (38 + Math.random() * 24) : (14 + Math.random() * 8);
       setTimeout(typeNext, delay);
     } else {
       termLineIdx++;
       termCharIdx = 0;
-      setTimeout(typeNext, isCmd ? 320 : 120);
+      var afterDelay = isPoint ? 620 : isCmd ? 320 : 120;
+      setTimeout(typeNext, afterDelay);
     }
   }
 
