@@ -229,11 +229,13 @@ body.cursor-active #cursor{opacity:1;}
 .hero-wm{
   color:var(--paper);
   font-size:clamp(30px, 5.6vw, 80px);
-  line-height:1.05;
+  line-height:1.15;
   letter-spacing:-.035em;
   font-weight:500;
   font-family:var(--t-sans);
   margin-bottom:36px;
+  /* fixed 3-line height — subline never shifts */
+  min-height:3.45em;
 }
 @media(max-width:768px){.hero-wm{margin-bottom:28px;}}
 @media(max-width:480px){.hero-wm{margin-bottom:20px;}}
